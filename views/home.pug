@@ -1,0 +1,317 @@
+doctype html
+
+html
+
+  head
+    title GTM
+    link(rel="stylesheet", href="style.css")
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js'></script>
+    //- <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css' rel='stylesheet' />
+    //- link(res="stylesheet", href="map.css")
+
+  body
+    div#map(style="width: 100vw; height: 100vh; cursor: pointer;")
+
+    div.block.menu
+      button
+        <svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <path d="M0 0L31.6995 0L31.6995 31.6759L0 31.6759L0 0Z" id="path_1" />
+            <clipPath id="mask_1">
+              <use xlink:href="#path_1" />
+            </clipPath>
+          </defs>
+          <g id="Home-icon-2">
+            <path d="M0 0L31.6995 0L31.6995 31.6759L0 31.6759L0 0Z" id="Background" fill="none" fill-rule="evenodd" stroke="none" />
+            <g clip-path="url(#mask_1)">
+              <path d="M26.0861 28.3764L20.1424 28.3764C19.2304 28.3764 18.4914 27.6379 18.4914 26.7266L18.4914 20.7873C18.4914 20.0581 17.9003 19.4675 17.1706 19.4675L14.5289 19.4675C13.7992 19.4675 13.2081 20.0581 13.2081 20.7873L13.2081 26.7266C13.2081 27.6379 12.4691 28.3764 11.5571 28.3764L5.61346 28.3764C4.70144 28.3764 3.96244 27.6379 3.96244 26.7266L3.96244 14.1308C3.96244 12.6136 4.65851 11.1803 5.85054 10.2419L15.2362 2.8515C15.5962 2.56905 16.1034 2.56905 16.4626 2.8515L25.8496 10.2419C27.0417 11.1803 27.7371 12.613 27.7371 14.1295L27.7371 26.7266C27.7371 27.6379 26.9981 28.3764 26.0861 28.3764L26.0861 28.3764Z" id="Shape" fill="#000000" fill-opacity="0.5803922" fill-rule="evenodd" stroke="none" />
+            </g>
+          </g>
+        </svg>
+
+      button(onclick="editMode()")
+        <?xml version="1.0" encoding="utf-8"?>
+          <svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <path d="M0 0L31.7 0L31.7 31.7L0 31.7L0 0Z" id="path_1" />
+              <clipPath id="mask_1">
+                <use xlink:href="#path_1" />
+              </clipPath>
+            </defs>
+            <g id="Support-icon">
+              <path d="M0 0L31.7 0L31.7 31.7L0 31.7L0 0Z" id="Background" fill="none" fill-rule="evenodd" stroke="none" />
+              <g clip-path="url(#mask_1)">
+                <path d="M27.5645 10.2959C27.5645 10.2959 27.0771 7.925 26.4167 7.925C25.9213 7.925 23.9454 10.1493 22.9838 11.2641C22.6404 11.663 22.1451 11.8875 21.6194 11.8875C20.6208 11.8875 19.8125 11.0792 19.8125 10.0806C19.8125 9.55491 20.037 9.0596 20.4359 8.71618C21.5507 7.75461 23.775 5.77865 23.775 5.28333C23.775 4.62292 21.3988 4.12364 21.3988 4.12364C20.881 4.01666 20.3461 3.9625 19.8125 3.9625C15.4418 3.9625 11.8875 7.55121 11.8875 11.9615C11.8875 12.5162 11.9548 13.0776 12.0896 13.6587L3.88191 21.7198C2.22823 23.3959 2.22823 26.1208 3.88323 27.7969C4.68894 28.6093 5.76278 29.0583 6.90926 29.0583C8.05443 29.0583 9.12958 28.6093 9.92076 27.8088L18.1482 19.7253C18.7149 19.8125 19.267 19.8125 19.8125 19.8125C24.2558 19.8125 27.7375 16.3638 27.7375 11.9615C27.7375 11.4041 27.6794 10.8427 27.5645 10.2959L27.5645 10.2959Z" id="wrench-1"  fill="#686868" fill-rule="evenodd" stroke="none" />
+              </g>
+            </g>
+          </svg>
+
+      p(style="text-align: center; font-size: 18px; width: 100%; ") GTManager
+
+      button(onclick="show_search()")
+        <svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <path d="M0 0L31.6995 0L31.6995 31.6759L0 31.6759L0 0Z" id="path_1" />
+            <clipPath id="mask_1">
+              <use xlink:href="#path_1" />
+            </clipPath>
+          </defs>
+          <g id="Search-icon">
+            <path d="M0 0L31.6995 0L31.6995 31.6759L0 31.6759L0 0Z" id="Background" fill="none" fill-rule="evenodd" stroke="none" />
+            <g clip-path="url(#mask_1)">
+              <path d="M11.8873 2.63966C6.79672 2.63966 2.64163 6.79166 2.64163 11.8785C2.64163 16.9653 6.79672 21.1173 11.8873 21.1173C14.1961 21.1173 16.3055 20.2568 17.929 18.8488L18.4914 19.4108L18.4914 21.1173L25.8694 28.4898C26.5985 29.2183 27.7819 29.2183 28.511 28.4898C29.2401 27.7612 29.2401 26.5787 28.511 25.8501L21.133 18.4776L19.4253 18.4776L18.8629 17.9157C20.2719 16.2933 21.133 14.1855 21.133 11.8785C21.133 6.79166 16.9779 2.63966 11.8873 2.63966L11.8873 2.63966ZM11.8873 5.27933C15.5503 5.27933 18.4914 8.21824 18.4914 11.8785C18.4914 15.5387 15.5503 18.4776 11.8873 18.4776C8.22436 18.4776 5.28326 15.5387 5.28326 11.8785C5.28326 8.21824 8.22436 5.27933 11.8873 5.27933L11.8873 5.27933Z" id="Shape" fill="#000000" fill-opacity="0.6784314" fill-rule="evenodd" stroke="none" />
+            </g>
+          </g>
+        </svg>
+
+    div.menu-dropdown.block#dropdown
+      p(style="font-size: 21px; text-align: center; width: 100%;", id="fullNameTop") John Carpenter
+      div.status#status-dropdown
+
+      form(action="/finishhouse", method="post", style="display: flex; flex-direction: column; justify-content: center;")
+        div(style="height: 65vh; overflow-y: auto;")
+          div(style="display: flex; flex-direction: row;")
+            p(style="margin: 14px 12px; padding: 0px; font-size: 16px;") First Name
+            input.text-input(placeholder="First Name", style="position: relative; left: 30px; width: 170px;", name="firstName", id="firstName")
+          div(style="display: flex; flex-direction: row;")
+            p(style="margin: 14px 12px; padding: 0px; font-size: 16px;") Last Name
+            input.text-input(placeholder="Last Name", style="position: relative; left: 35px; width: 170px", name="lastName", id="lastName")
+          div(style="display: flex; flex-direction: row;")
+            p(style="margin: 14px 12px; padding: 0px; font-size: 16px;") Occupation
+            input.text-input(placeholder="Do for Living", style="position: relative; left: 30px; width: 170px", name="occupation", id="occupation")
+
+          <label class="container" style="font-size: 16px; margin-top: 30px;">Was Home
+            <input type="checkbox" id="wasHome" name="washome">
+            <span class="checkmark"></span>
+          </label>
+          <label class="container" style="font-size: 16px;">Wants More Answers
+            <input type="checkbox" id="wantsMoreAnswers" name="wantsmoreanswers">
+            <span class="checkmark"></span>
+          </label>
+          <label class="container" style="font-size: 16px;">Saved
+            <input type="checkbox" id="saved" name="saved">
+            <span class="checkmark"></span>
+          </label>
+          <label class="container" style="font-size: 16px; margin-bottom: 30px;">Wants to go to church
+            <input type="checkbox" id="wantsToGoToChurch" name="wantstogotochurch">
+            <span class="checkmark"></span>
+          </label>
+
+          div(style="display: flex; flex-direction: column;")
+            p(style="margin: 5px 12px; padding: 0px; font-size: 16px;") Talked About
+            textarea.text-input(style="width: 90%; margin: 5px 5px; resize: vertical; font-size: 16px; height: 100px;", placeholder="What Talked About...", id="talkedAbout", name="talkabout")
+          div(style="display: flex; flex-direction: column;")
+            p(style="margin: 5px 12px; padding: 0px; font-size: 16px;") Extra Comments
+            textarea.text-input(style="width: 90%; margin: 5px 5px; resize: vertical; font-size: 16px; height: 150px;", placeholder="Extra Comments...", id="comments", name="comments")
+          div(style="display: flex; flex-direction: row; visibility: hidden;")
+            textarea.text-input#data(style="width: 1000%; margin: 5px 5px; resize: vertical; font-size: 16px; height: 0px;  visibility: hidden;", placeholder="Extra Comments...", name="data")
+            input#coordinate_item(style="visibility: hidden; width: 100%; height: 0px;", name="coordinates")
+            input#itemindex(style="visibility: hidden; width: 100%; height: 0px;", name="itemindex")
+
+        button.button-green(style="margin-top: 25px; margin-bottom: 20px; font-size: 15px; width: auto; margin: 25px 5px; padding: 0px auto;" type="submit") Finish Household
+
+    div#warning.block
+      div
+        p(style="text-align: center; width: 75%; margin: auto; margin-top: 20px;") Do you have their permission?
+
+      div(style="display: flex; flex-direction: row; width: 100%; margin: auto;  margin-top: 30px; margin-bottom: 20px;")
+        button.button-gray(style="font-size: 18px;", onclick="close_warning()") No
+        button.button-green#input-info(style="font-size: 18px;", onclick="show_drop()") Yes
+
+
+    div.menu-dropdown.block#dropdown-search
+      input.green-input#searchinput(placeholder="Search...", onkeyup="searchlist()")
+      ul#searcharea(style="height: 65vh; overflow-y: auto;")
+
+      input#send-to-front(style="visibility: hidden; width: 0px; height: 0px;", name="front-data", value=people)
+
+
+    <div id="menu"> 
+      <input id="satellite-v9" type="radio" style="margin-right: 5px; margin-top: 2px;" name="rtoggle" value="satellite">
+      <!-- See a list of Mapbox-hosted public styles at -->
+      <!-- https://docs.mapbox.com/api/maps/styles/#mapbox-styles -->
+      <label for="satellite-v9">satellite</label>
+      <input id="light-v10" style="margin-right: 5px; margin-top: 2px;" type="radio" name="rtoggle" value="light">
+      <label for="light-v10">light</label>
+      <input id="dark-v10" style="margin-right: 5px; margin-top: 2px;" type="radio" name="rtoggle" value="dark">
+      <label for="dark-v10">dark</label>
+      <input id="streets-v11" style="margin-right: 5px; margin-top: 2px;" type="radio" name="rtoggle" value="streets" checked="checked">
+      <label for="streets-v11">streets</label>
+      <input id="outdoors-v11" style="margin-right: 5px; margin-top: 2px;" type="radio" name="rtoggle" value="outdoors">
+      <label for="outdoors-v11">outdoors</label>
+    </div>
+
+  script
+    include ./js/app.js
+
+
+  script.
+    var dropdown = document.getElementById('dropdown');
+    var warning = document.getElementById('warning');
+    var popup = document.getElementById('coordinates');
+
+    //- console.log(document.getElementById('send-to-front').value)
+
+    var coords;
+
+    var searchItems = '';
+
+    function searchlist() {
+      // Declare variables
+      var input, filter, ul, li, a, txtValue;
+      input = document.getElementById('searchinput');
+      filter = input.value.toUpperCase();
+      ul = document.getElementById("searcharea");
+      li = ul.getElementsByTagName('li');
+
+      // Loop through all list items, and hide those who don't match the search query
+      for (var i = 0; i < li.length; i++) {
+        a = li[i].getElementsByTagName("p")[0];
+        txtValue = a.textContent || a.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          li[i].style.display = "";
+        } else {
+          li[i].style.display = "none";
+        }
+      }
+    }
+
+    function goto(lat, log){
+      console.log("location to go to is ", lat, log )
+      map.flyTo({
+        center: [
+        lat, log
+        ],
+        essential: true // this animation is considered essential with respect to prefers-reduced-motion
+      });
+    }
+    //- var searchItemTemplate = `<div class="search-item"><div class="status color-${geojson.features[i].data.color}" id="status-search" style="position: relative; top: 23px;"></div><p style="font-size: 19px; width: 100%;">${geojson.features[i].data.firstName + " " + geojson.features[i].data.lastName}</p></div>`;
+
+    function searchcolor() {
+      searchItems = ''
+      for (var i =0; i < geojson.features.length; i++){
+        searchItems += `<li style="margin-left: -25px;" class="search-item" onclick="goto(${geojson.features[i].geometry.coordinates[0]}, ${geojson.features[i].geometry.coordinates[1]} )"><div class="status color-${geojson.features[i].data.color}" id="status-search" style="position: relative; top: 23px;"></div><p style="font-size: 19px; width: 100%;">${geojson.features[i].data.firstName + " " + geojson.features[i].data.lastName}</p></li>`;
+      }
+      document.getElementById('searcharea').innerHTML = searchItems;
+    }
+
+    function showstatus() {
+      //- document.getElementById('data').value = JSON.stringify(geojson);
+
+      for (var i =0; i < geojson.features.length; i++){
+        console.log(geojson.features[i].geometry.coordinates)
+        coords = geojson.features[i].geometry.coordinates[0].toString() + ', ' + geojson.features[i].geometry.coordinates[1].toString();
+        console.log(document.getElementById('coordinates').innerText)
+        if (geojson.features[i].geometry.coordinates[0].toString() + ', ' + geojson.features[i].geometry.coordinates[1].toString() == document.getElementById('coordinates').innerText){
+
+          if (geojson.features[i].data.color == 'red'){
+            console.log("red")
+            //- document.getElementById('status').style.backgroundColor = '#d36363';
+            document.getElementById('status-dropdown').style.backgroundColor = '#d36363';
+            document.getElementById('status-popup').style.backgroundColor = '#d36363';
+          } else if (geojson.features[i].data.color == 'yellow'){
+            console.log("yellow")
+            //- document.getElementById('status').style.backgroundColor = '#eadf4c';
+            document.getElementById('status-dropdown').style.backgroundColor = '#eadf4c';
+            document.getElementById('status-popup').style.backgroundColor = '#eadf4c';
+          } else if (geojson.features[i].data.color == 'green'){
+            console.log("green")
+            //- document.getElementById('status').style.backgroundColor = '#7dd261';
+            document.getElementById('status-dropdown').style.backgroundColor = '#7dd261';
+            document.getElementById('status-popup').style.backgroundColor = '#7dd261';
+          } else if (geojson.features[i].data.color == 'gray'){
+            console.log("gray")
+            //- document.getElementById('status').style.backgroundColor = '#d6d6d6';
+            document.getElementById('status-dropdown').style.backgroundColor = '#d6d6d6';
+            document.getElementById('status-popup').style.backgroundColor = '#d6d6d6';
+          } 
+        }
+
+      }
+    }
+
+    function close_warning(){
+      warning.style.display = 'none';
+    }
+
+    function show() {
+      document.getElementById('data').value = JSON.stringify(geojson);
+
+      for (var i =0; i < geojson.features.length; i++){
+        console.log(geojson.features[i].geometry.coordinates)
+        coords = geojson.features[i].geometry.coordinates[0].toString() + ', ' + geojson.features[i].geometry.coordinates[1].toString();
+        console.log(document.getElementById('coordinates').innerText)
+        console.log(coords)
+        if (geojson.features[i].geometry.coordinates[0].toString() + ', ' + geojson.features[i].geometry.coordinates[1].toString() == document.getElementById('coordinates').innerText){
+          console.log("Found It", i)
+          warning.style.display = 'block'
+          document.getElementById('fullNameTop').innerText = geojson.features[i].data.firstName + ' ' + geojson.features[i].data.lastName
+          document.getElementById('firstName').value = geojson.features[i].data.firstName;
+          document.getElementById('lastName').value = geojson.features[i].data.lastName;
+          document.getElementById('occupation').value = geojson.features[i].data.occupation;
+          document.getElementById('wasHome').checked = geojson.features[i].data.wasHome;
+          document.getElementById('wantsMoreAnswers').checked = geojson.features[i].data.wantsMoreAnswers;
+          document.getElementById('saved').checked = geojson.features[i].data.saved;
+          document.getElementById('wantsToGoToChurch').checked = geojson.features[i].data.wantsToGoToChurch;
+          document.getElementById('talkedAbout').value = geojson.features[i].data.talkedAbout;
+          document.getElementById('comments').value = geojson.features[i].data.comments;
+          document.getElementById('coordinate_item').value = geojson.features[i].geometry.coordinates[0].toString() + ', ' + geojson.features[i].geometry.coordinates[1].toString();
+          document.getElementById('itemindex').value = i;
+
+          if (geojson.features[i].data.color == 'red'){
+            console.log("red")
+            //- document.getElementById('status').style.backgroundColor = '#d36363';
+            document.getElementById('status-dropdown').style.backgroundColor = '#d36363';
+            document.getElementById('status-popup').style.backgroundColor = '#d36363';
+          } else if (geojson.features[i].data.color == 'yellow'){
+            console.log("yellow")
+            //- document.getElementById('status').style.backgroundColor = '#eadf4c';
+            document.getElementById('status-dropdown').style.backgroundColor = '#eadf4c';
+            document.getElementById('status-popup').style.backgroundColor = '#eadf4c';
+          } else if (geojson.features[i].data.color == 'green'){
+            console.log("green")
+            //- document.getElementById('status').style.backgroundColor = '#7dd261';
+            document.getElementById('status-dropdown').style.backgroundColor = '#7dd261';
+            document.getElementById('status-popup').style.backgroundColor = '#7dd261';
+          } else if (geojson.features[i].data.color == 'gray'){
+            console.log("gray")
+            //- document.getElementById('status').style.backgroundColor = '#d6d6d6';
+            document.getElementById('status-dropdown').style.backgroundColor = '#d6d6d6';
+            document.getElementById('status-popup').style.backgroundColor = '#d6d6d6';
+          } 
+        }
+
+      }
+      //- console.log(document.getElementById('coordinates').innerText)
+    }
+
+    function show_drop(){
+      dropdown.style.display = "block";
+      warning.style.display = 'none';
+    }
+
+    var dropdown_search = document.getElementById('dropdown-search');
+
+    function show_search() {
+      searchcolor()
+
+      if (dropdown_search.style.display !== 'block'){
+        dropdown_search.style.display = 'block'
+      } else if (dropdown_search.style.display === 'block') {
+        hide(dropdown_search)
+      }
+    }
+
+    function hide(x){
+      x.style.display = 'none'
+    }
+
+    const layerList = document.getElementById('menu');
+    const inputs = layerList.getElementsByTagName('input');
+
+    for (const input of inputs) {
+      input.onclick = (layer) => {
+        const layerId = layer.target.id;
+        map.setStyle('mapbox://styles/mapbox/' + layerId);
+      };
+    }

@@ -1,0 +1,19 @@
+{
+    "name": "gtmanager",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "start": "node index.js",
+        "build": "netlify-lambda build express"
+    },
+    "author": "Caleb J. Gross",
+    "license": "ISC",
+    "dependencies": {
+        "body-parser": "^1.19.1",
+        "express": "^4.17.2",
+        "mapbox-gl": "^2.6.1",
+        "mongoose": "^6.1.4",
+        "pug": "^3.0.2"
+    }
+}

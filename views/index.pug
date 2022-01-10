@@ -1,0 +1,18 @@
+doctype html
+
+html
+
+  head
+    title GTM
+    link(rel="stylesheet", href="style.css")
+
+  body(style="background-image: url('background.png'); background-position-y: 50%; display: flex; justify-content: center; align-content: center; align-items: center;")
+    div.block(style="display: flex; flex-direction: column; justify-content: center; padding: 15px 40px;")
+      p(style="text-align: center;") Sign In
+      form(action="/signin", method="post", style="display: flex; flex-direction: column; justify-content: center;")
+        input.text-input(placeholder="First Name", name="username")
+        input.text-input(placeholder="Last Name", name="lastname")
+        input.text-input(placeholder="Password", name="password", type="password")
+        input.text-input(placeholder="Email", name="email", type="email")
+
+        button.button-green(style="margin-top: 25px; margin-bottom: 20px;" type="submit") Sign In
