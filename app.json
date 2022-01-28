@@ -1,0 +1,29 @@
+{
+    "name": "Small Sharp Tool",
+    "description": "This app does one little thing, and does it well.",
+    "keywords": [
+        "productivity",
+        "HTML5",
+        "scalpel"
+    ],
+    "website": "",
+    "repository": "https://github.com/LublubXT/GTManager",
+    "logo": "",
+    "success_url": "/",
+    "scripts": {
+        "postdeploy": ""
+    },
+    "formation": {
+        "web": {
+            "quantity": 1,
+            "size": "standard-1x"
+        }
+    },
+    "environments": {
+        "test": {
+            "scripts": {
+                "test": "node index.js"
+            }
+        }
+    }
+}

@@ -1,14 +1,26 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const pug = require('pug');
-var fs = require("fs");
+const mongoose = require("mongoose");
 
 const app = express();
 app.set('view engine', 'pug');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
+mongoose.connect("mongodb+srv://Caleb:Caleb@cluster0.bdhbu.mongodb.net/gtm?retryWrites=true&w=majority", { useNewUrlParser: true, useUnifiedTopology: true });
+
 var people;
+
+const userSchema = {
+    data: {},
+    password: String,
+    email: String,
+    firstname: String,
+    lastname: String
+}
+
+const User = mongoose.model("User", userSchema);
 
 console.log("started server")
 
@@ -19,6 +31,8 @@ var starting_data = {
     "data": [{
         "password": '',
         "email": '',
+        "firstname": '',
+        "lastname": '',
         "type": "FeatureCollection",
         "features": [{
             "type": "Feature",
@@ -51,7 +65,8 @@ var starting_data = {
 
 var userfile = '';
 
-app.get('/', function(req, res) {
+app.get("/", function(req, res) {
+    console.log("this is the sign in page is it working!!!!!!!!!!11111!!!!")
     res.render('index');
 });
 
@@ -61,29 +76,19 @@ app.get('/signup', function(req, res) {
 
 app.get('/home', async function(req, res) {
 
-    if (fs.existsSync(`./data/${userfile}.json`)) {
-        console.log("exists:", `./data/${userfile}.json`);
+    User.find({ email: Gemail, password: Gpassword }, async function(err, foundItems) {
 
-        fs.readFile(`./data/${userfile}.json`, "utf-8", async(err, data) => {
-            if (err) {
-                console.log(err);
-                res.redirect('/')
-            }
-            people = await JSON.parse(data)
+        if (err) {
+            console.log(err)
+        } else {
+            people = await foundItems;
 
-            if (Gpassword == people.data[0].password && Gemail == people.data[0].email) {
-                res.render('home', { people: people.data, person_data: people.data[0].features });
-            } else {
-                console.log("sorry")
-                res.redirect('/')
-            }
+            console.log(people)
+            console.log("user is ", people[0].password, people[0].email)
 
-
-        });
-    } else {
-        console.log("DOES NOT exist:", `./data/${userfile}.json`);
-        res.redirect('/')
-    }
+            res.render("home", { people: people[0].data.data, person_data: people[0].data.data.features });
+        }
+    });
 });
 
 app.post('/signin', function(req, res) {
@@ -95,7 +100,7 @@ app.post('/signin', function(req, res) {
     Gpassword = password
     Gemail = email
 
-    console.log(username, password, email)
+    // console.log(username, password, email)
 
     userfile = username.toString() + lastname.toString();
 
@@ -122,18 +127,27 @@ app.post('/signup', function(req, res) {
 
     starting_data.data[0].email = email;
     starting_data.data[0].password = password;
+    starting_data.data[0].firstname = username;
+    starting_data.data[0].lastname = lastname;
 
-    var json = JSON.stringify(starting_data)
+    var data = starting_data.data[0]
 
-    fs.writeFile(`./data/${userfile}.json`, json, 'utf8', async(err) => {
-        if (err) throw err;
-        await console.log('complete');
+    // var json = JSON.stringify(starting_data)
 
-        res.redirect('/');
+    const user = new User({
+        data: { data },
+        password: password,
+        email: email,
+        firstname: username,
+        lastname: lastname
     });
+
+    user.save();
+
+    res.redirect('/');
 })
 
-app.post('/finishhouse', function(req, res) {
+app.post('/finishhouse', async function(req, res) {
     var data = req.body.data
     var firstname = req.body.firstName
     var lastname = req.body.lastName
@@ -154,38 +168,6 @@ app.post('/finishhouse', function(req, res) {
     var d = {
         data: [data]
     }
-
-    // for (var i = 0; i < 1; i++) {
-    //     d.data[0].features.push({
-    //         'type': 'Feature',
-    //         "index": Math.floor(Math.random(1) * 5),
-    //         'geometry': {
-    //             'type': 'Point',
-    //             'coordinates': [Math.random(1) * 90, Math.random(1) * -90]
-    //         },
-    //         'properties': {
-    //             'description': `<div class="block" style="background-color: rgba(252, 252, 252, 0.6); backdrop-filter: blur(5px);"><div><p id="coordinates" style="text-align: center; width: 75%; margin: auto; margin-top: 20px; font-size: 18px;">Hello</p><div id="status-popup" class="status" style="position: fixed; top: 11px; right: 11px; width: 5px; height: 5px;"></div></div><div style="display: flex; flex-direction: row; width: 100%; margin: auto;  margin-top: 30px; margin-bottom: 20px;"><button style="font-size: 15px;  width: 150px; margin-left: 5px; margin-right: -50px;", onclick="show()" class="button-green" id="input-info" onclick="show()">Input Info</button><button style="font-size: 15px;  width: 150px; margin-left: 63px; margin-right: 20px;", class="button-gray" id="input-info" onclick="showstatus()">Show Status</button></div></div>`
-    //         },
-    //         'data': {
-    //             'firstName': '',
-    //             'lastName': '',
-    //             'occupation': '',
-    //             'wasHome': true,
-    //             'saved': false,
-    //             'wantsToGoToChurch': false,
-    //             'talkedAbout': '',
-    //             'comments': '',
-    //             'color': 'gray'
-    //         }
-    //     })
-
-    //     var json = JSON.stringify(d)
-
-    //     fs.writeFile(`./data/${userfile}.json`, json, 'utf8', function(err) {
-    //         if (err) throw err;
-    //         console.log('complete');
-    //     });
-    // }
 
     d.data[0].features[itemindex].data.firstName = firstname
     d.data[0].features[itemindex].data.lastName = lastname
@@ -211,23 +193,26 @@ app.post('/finishhouse', function(req, res) {
         d.data[0].features[itemindex].data.color = 'red'
         console.log('should be red', d.data[0].features[itemindex].data.color)
     }
-    // else if (d.data[0].features[itemindex].data.wasHome == 'on') {
-    //     d.data[0].features[itemindex].data.color = 'gray'
-    //     console.log('should be gray', d.data[0].features[itemindex].data.color)
-    // }
 
-    var json = JSON.stringify(d)
-
-    fs.writeFile(`./data/${userfile}.json`, json, 'utf8', function(err) {
-        if (err) throw err;
-        console.log('complete');
-    });
+    // var json = JSON.stringify(d)
 
     userfile = userfile
+
+    data = d.data[0];
+
+    await User.updateOne({ email: Gemail, password: Gpassword }, {
+        data: { data }
+    });
 
     res.redirect('/home')
 })
 
-app.listen(4000, function() {
-    console.log('Server started on port 3000.');
+let port = process.env.PORT;
+if (port == null || port == "") {
+    port = 3000;
+}
+
+app.listen(port, function() {
+    console.log("Server started on port", port);
+    console.log("its working so far so good!")
 });

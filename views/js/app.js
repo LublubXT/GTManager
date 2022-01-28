@@ -4,7 +4,7 @@ document.getElementById('wrench-1').style.fill = '#686868';
 
 d = JSON.parse(document.getElementById('send-to-front').value)
 
-console.log(JSON.stringify(d[0].features[0].geometry.coordinates, undefined, 4))
+console.log(JSON.stringify(d, undefined, 4))
 
 var front_data = document.getElementById('send-to-front').value;
 
@@ -24,49 +24,15 @@ function editMode() {
         document.getElementById('wrench-1').style.fill = '#686868';
         on = false
     }
-
-    //- console.log("change color")
+    console.log(JSON.stringify(d, undefined, 4))
+        //- console.log("change color")
 }
 
-//- var map = new mapboxgl.Map({
-//-   container: 'map',
-//-   style: 'mapbox://styles/mapbox/streets-v11',
-//-   center: [-79.4512, 43.6568],
-//-   zoom: 13
-//- });
-
-// const geojson = {
-//     'type': 'FeatureCollection',
-//     'features': [{
-//             'type': 'Feature',
-//             'geometry': {
-//                 'type': 'Point',
-//                 'coordinates': [-77.032, 38.913]
-//             },
-//             'properties': {
-//                 'title': 'Mapbox',
-//                 'description': 'Washington, D.C.'
-//             }
-//         },
-//         {
-//             'type': 'Feature',
-//             'geometry': {
-//                 'type': 'Point',
-//                 'coordinates': [-122.414, 37.776]
-//             },
-//             'properties': {
-//                 'title': 'Mapbox',
-//                 'description': 'San Francisco, California'
-//             }
-//         }
-//     ]
-// };
-
 const geojson = {
-    "password": d[0].password,
-    "email": d[0].email,
+    "password": d.password,
+    "email": d.email,
     'type': 'FeatureCollection',
-    'features': d[0].features
+    'features': d.features
 };
 
 const map = new mapboxgl.Map({
@@ -93,11 +59,6 @@ for (const feature of geojson.features) {
             )
         )
         .addTo(map);
-
-    // current_coord = feature.geometry.coordinates;
-    // current_pos = feature.index
-
-    // console.log(current_coord, current_pos)
 
 }
 
