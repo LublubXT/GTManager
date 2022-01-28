@@ -8,7 +8,7 @@ app.set('view engine', 'pug');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
-mongoose.connect("mongodb+srv://Caleb:Caleb@cluster0.bdhbu.mongodb.net/gtm?retryWrites=true&w=majority", { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect("mongodb+srv://your-mongodb-atlas-link-here", { useNewUrlParser: true, useUnifiedTopology: true });
 
 var people;
 
